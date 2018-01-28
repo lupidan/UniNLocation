@@ -1,5 +1,5 @@
 ﻿
-using Lupidan.NativeLocation;
+using Lupidan.UniNLocation;
 using UnityEngine;
 
 public class LocationTesterClass : MonoBehaviour

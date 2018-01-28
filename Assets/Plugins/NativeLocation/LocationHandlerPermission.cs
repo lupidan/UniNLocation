@@ -1,5 +1,5 @@
 ﻿
-namespace Lupidan.NativeLocation
+namespace Lupidan.UniNLocation
 {
 	public enum LocationAuthorizationStatus
 	{

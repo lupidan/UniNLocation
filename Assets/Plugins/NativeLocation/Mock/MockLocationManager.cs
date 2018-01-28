@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Timers;
 
-namespace Lupidan.NativeLocation
+namespace Lupidan.UniNLocation
 {
-	
 	public class MockLocationManager : LocationManager
 	{
-		private Random _random = new Random(20);
-		private Timer _activeTimer = new Timer();
+		private readonly Random _random = new Random(20);
+		private readonly Timer _activeTimer = new Timer();
+		
+		#region LocationManager implementation
 		
 		public event Action<Location> LocationReceived;
+		public event Action<string, long> ErrorReceived;
 		public LocationAuthorizationStatus DeviceAuthorizationStatus
 		{
 			get { return LocationAuthorizationStatus.Accepted; }
@@ -31,6 +33,8 @@ namespace Lupidan.NativeLocation
 		{
 			_activeTimer.Stop();
 		}
+		
+		#endregion
 
 		private void EmitRandomLocation(object sender, ElapsedEventArgs args)
 		{
@@ -41,5 +45,4 @@ namespace Lupidan.NativeLocation
 			_activeTimer.Start();
 		}
 	}
-
 }

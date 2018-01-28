@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lupidan.NativeLocation
+namespace Lupidan.UniNLocation
 {
 	public struct Location
 	{

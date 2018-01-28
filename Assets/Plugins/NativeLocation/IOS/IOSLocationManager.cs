@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using AOT;
 
-namespace Lupidan.NativeLocation
+namespace Lupidan.UniNLocation
 {
 	public class IOSLocationManager : LocationManager
 	{
