@@ -25,6 +25,9 @@ public class LocationTesterClass : MonoBehaviour
 			
 		}
 		else
+		{
+			
+		}
 	}
 
 	public void OnStopPressed()
