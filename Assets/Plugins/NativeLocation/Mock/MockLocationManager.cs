@@ -22,6 +22,10 @@ namespace Lupidan.UniNLocation
 			get { return LocationAuthorizationStatus.Accepted; }
 		}
 
+		public void RequestLocationPermissions() { }
+
+		public void GoToApplicationSettings() { }
+
 		public void StartTracking()
 		{
 			_activeTimer.Interval = 1000.0;

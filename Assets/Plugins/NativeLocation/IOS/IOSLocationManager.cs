@@ -37,6 +37,16 @@ namespace Lupidan.UniNLocation
 			get { return (LocationAuthorizationStatus) IOSLocationWrapperGetApplicationAuthorizationStatus(); }
 		}
 
+		public void RequestLocationPermissions()
+		{
+			IOSLocationWrapperRequestApplicationPermissions();
+		}
+
+		public void GoToApplicationSettings()
+		{
+			IOSLocationWrapperGoToApplicationSettings();
+		}
+
 		public void StartTracking()
 		{
 			ActiveLocationManager = this;
