@@ -8,37 +8,50 @@ public class LocationTesterClass : MonoBehaviour
 	
 	private void Awake()
 	{
-		this._locationManager = new IOSLocationManager();
+		#if UNITY_IOS
+		_locationManager = new IOSLocationManager();
+		#else
+		_locationManager = new MockLocationManager();
+		#endif
 	}
 
 	public void OnStartPressed()
 	{
-		this._locationManager.LocationReceived += LocationManagerOnLocationReceived;
-		this._locationManager.StartTracking();
-
 		if (_locationManager.DeviceAuthorizationStatus != LocationAuthorizationStatus.Accepted)
 		{
-			
+			Debug.Log("Please, enable location services on your device!");
+		}
+		else if (_locationManager.ApplicationAuthorizationStatus == LocationAuthorizationStatus.NotDetermined)
+		{
+			_locationManager.RequestLocationPermissions();
 		}
 		else if (_locationManager.ApplicationAuthorizationStatus == LocationAuthorizationStatus.Denied)
 		{
-			
+			_locationManager.GoToApplicationSettings();
 		}
 		else
 		{
-			
+			_locationManager.LocationReceived += LocationManagerOnLocationReceived;
+			_locationManager.ErrorReceived += LocationManagerOnErrorReceived;
+			_locationManager.StartTracking();
 		}
 	}
 
 	public void OnStopPressed()
 	{
-		this._locationManager.LocationReceived -= LocationManagerOnLocationReceived;
-		this._locationManager.StopTracking();
+		_locationManager.LocationReceived -= LocationManagerOnLocationReceived;
+		_locationManager.ErrorReceived -= LocationManagerOnErrorReceived;
+		_locationManager.StopTracking();
 	}
 	
 	private void LocationManagerOnLocationReceived(Location location)
 	{
 		Debug.Log("Received location " + location);
+	}
+	
+	private void LocationManagerOnErrorReceived(string errorMessage, long errorCode)
+	{
+		Debug.Log("Error: " + errorMessage + " :: " + errorCode);
 	}
 
 }

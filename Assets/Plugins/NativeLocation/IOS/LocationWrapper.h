@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, LocationWrapperAuthorizationStatus) {
 
 extern "C"
 {
-    typedef void (*ReceivedLocationDelegate)(double, double, double, double);
+    typedef void (*LocationReceivedDelegate)(double, double, double, double);
     typedef void (*LocationErrorDelegate)(const char *, long);
 }
 

@@ -26,7 +26,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface LocationWrapper () <CLLocationManagerDelegate>
-@property (nonatomic, assign) ReceivedLocationDelegate receivedLocationCallback;
+@property (nonatomic, assign) LocationReceivedDelegate receivedLocationCallback;
 @property (nonatomic, assign) LocationErrorDelegate locationErrorCallback;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, assign) BOOL isUsingDeferredLocationUpdates;
@@ -163,7 +163,7 @@ extern "C"
         [[LocationWrapper sharedWrapper] goToApplicationSettings];
     }
     
-    void IOSLocationWrapperStartTrackingLocation(ReceivedLocationDelegate callback)
+    void IOSLocationWrapperStartTrackingLocation(LocationReceivedDelegate locationCallback, LocationErrorDelegate errorCallback)
     {
         [[LocationWrapper sharedWrapper] setReceivedLocationCallback:callback];
         [[LocationWrapper sharedWrapper] start];
