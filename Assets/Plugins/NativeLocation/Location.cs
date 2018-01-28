@@ -5,10 +5,12 @@ namespace Lupidan.UniNLocation
 {
 	public struct Location
 	{
-		public double Latitude;
-		public double Longitude;
-		public double Altitude;
-		public DateTime Timestamp;
+		public readonly double Latitude;
+		public readonly double Longitude;
+		public readonly double Altitude;
+		public readonly DateTime Timestamp;
+		public readonly double LatitudeRad;
+		public readonly double LongitudeRad;
 
 		public Location(double latitude, double longitude, double altitude, DateTime timestamp)
 		{
@@ -16,6 +18,8 @@ namespace Lupidan.UniNLocation
 			Longitude = longitude;
 			Altitude = altitude;
 			Timestamp = timestamp;
+			LatitudeRad = latitude * (Math.PI / 180.0);
+			LongitudeRad = longitude * (Math.PI / 180.0);
 		}
 
 		public override string ToString()
