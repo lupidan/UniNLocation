@@ -1,10 +1,14 @@
 ﻿
+using System;
 using Lupidan.UniNLocation;
 using UnityEngine;
 
 public class LocationTesterClass : MonoBehaviour
 {
 	private LocationManager _locationManager;
+
+	private Location? _previousLocation;
+	private double kilometersAmount = 0.0;
 	
 	private void Awake()
 	{
@@ -46,6 +50,15 @@ public class LocationTesterClass : MonoBehaviour
 	
 	private void LocationManagerOnLocationReceived(Location location)
 	{
+		if (_previousLocation.HasValue)
+		{
+			var distance = _previousLocation.Value.DistanceInKilometersTo(location);
+			kilometersAmount += distance;
+			Debug.Log("ADDING " + distance);
+		}
+		
+		_previousLocation = location;
+		
 		Debug.Log("Received location " + location);
 	}
 	
