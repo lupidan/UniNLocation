@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Lupidan.UniNLocation
 {
@@ -19,7 +20,7 @@ namespace Lupidan.UniNLocation
 
 		public override string ToString()
 		{
-			return string.Format("{0} [{1}, {2}] {3}", Timestamp, Latitude, Longitude, Altitude);
+			return string.Format("{0} [{1}, {2}] {3}", Timestamp.ToString("o", CultureInfo.InvariantCulture), Latitude, Longitude, Altitude);
 		}
 	}
 }
