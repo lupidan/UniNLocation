@@ -8,7 +8,8 @@ namespace Lupidan.UniNLocation
 	{
 		private delegate void LocationReceivedDelegate(double latitude, double longitude, double altitude, double timestamp);
 		private delegate void LocationErrorDelegate(string errorMessage, long errorCode);
-		
+
+		private static readonly DateTime ReferenceDate = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(2001, 1, 1, 0, 0, 0));
 		private static IOSLocationManager ActiveLocationManager;
 		private Action<Location> _locationReceived;
 		private Action<string, long> _errorReceived;
@@ -86,9 +87,10 @@ namespace Lupidan.UniNLocation
 		#region Objective C => C# callbacks
 		
 		[MonoPInvokeCallback(typeof(LocationReceivedDelegate))]
-		private static void  LocationReceivedCallback(double latitude, double longitude, double altitude, double timestamp)
+		private static void  LocationReceivedCallback(double latitude, double longitude, double altitude, double timeSinceReferenceDate)
 		{
-			var location = new Location(latitude, longitude, altitude, DateTime.FromOADate(timestamp));
+			DateTime timestamp = ReferenceDate.AddSeconds(timeSinceReferenceDate);
+			var location = new Location(latitude, longitude, altitude, timestamp);
 			if (ActiveLocationManager._locationReceived != null)
 				ActiveLocationManager._locationReceived(location);
 		}

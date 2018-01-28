@@ -119,7 +119,7 @@
 - (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
 {
     for (CLLocation *location in locations)
-        self.locationReceivedCallback(location.coordinate.latitude, location.coordinate.longitude, location.altitude, 0.0);
+        self.locationReceivedCallback(location.coordinate.latitude, location.coordinate.longitude, location.altitude, [location.timestamp timeIntervalSinceReferenceDate]);
     
     if ([CLLocationManager deferredLocationUpdatesAvailable])
     {
@@ -179,4 +179,3 @@ extern "C"
 }
 
 @end
-
