@@ -26,7 +26,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface LocationWrapper () <CLLocationManagerDelegate>
-@property (nonatomic, assign) LocationReceivedDelegate receivedLocationCallback;
+@property (nonatomic, assign) LocationReceivedDelegate locationReceivedCallback;
 @property (nonatomic, assign) LocationErrorDelegate locationErrorCallback;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, assign) BOOL isUsingDeferredLocationUpdates;
@@ -119,7 +119,7 @@
 - (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
 {
     for (CLLocation *location in locations)
-        self.receivedLocationCallback(location.coordinate.latitude, location.coordinate.longitude, location.altitude, 0.0);
+        self.locationReceivedCallback(location.coordinate.latitude, location.coordinate.longitude, location.altitude, 0.0);
     
     if ([CLLocationManager deferredLocationUpdatesAvailable])
     {
@@ -165,15 +165,18 @@ extern "C"
     
     void IOSLocationWrapperStartTrackingLocation(LocationReceivedDelegate locationCallback, LocationErrorDelegate errorCallback)
     {
-        [[LocationWrapper sharedWrapper] setReceivedLocationCallback:callback];
+        [[LocationWrapper sharedWrapper] setLocationReceivedCallback:locationCallback];
+        [[LocationWrapper sharedWrapper] setLocationErrorCallback:errorCallback];
         [[LocationWrapper sharedWrapper] start];
     }
     
     void IOSLocationWrapperStopTrackingLocation()
     {
         [[LocationWrapper sharedWrapper] stop];
-        [[LocationWrapper sharedWrapper] setReceivedLocationCallback:nil];
+        [[LocationWrapper sharedWrapper] setLocationReceivedCallback:nil];
+        [[LocationWrapper sharedWrapper] setLocationErrorCallback:nil];
     }
 }
 
 @end
+
